@@ -1,0 +1,414 @@
+------------------- 
+-- Create tables
+-------------------
+create table TTeams
+(
+	 intTeamID   		INTEGER			NOT NULL
+	,strTeam			VARCHAR(50)		NOT NULL
+	,intAgeGroupID		integer			not null
+	,CONSTRAINT TTeams_PK PRIMARY KEY ( intTeamID )
+	
+)
+
+CREATE TABLE TGenders
+(
+	intGenderID		INTEGER			NOT NULL
+	,strGender		VARCHAR(10)		NOT NULL
+	,CONSTRAINT TGenders_PK PRIMARY KEY ( intGenderID )
+)
+
+CREATE TABLE TShirtSizes
+(
+	intShirtSizeID	INTEGER			NOT NULL
+	,strShirtSize	VARCHAR(50)		NOT NULL
+	,CONSTRAINT TShirtSizes_PK PRIMARY KEY ( intShirtSizeID )
+)
+
+CREATE TABLE TPantSizes
+(
+	intPantSizeID	INTEGER			NOT NULL
+	,strPantSize	VARCHAR(50)		NOT NULL
+	,CONSTRAINT TPantSizes_PK PRIMARY KEY ( intPantSizeID )
+)
+
+CREATE TABLE TSockSizes
+(
+	intSockSizeID	INTEGER			NOT NULL
+	,strSockSize	VARCHAR(50)		NOT NULL
+	,CONSTRAINT TSockSizes_PK PRIMARY KEY ( intSockSizeID )
+)
+
+CREATE TABLE TStates 
+(
+	intStateID		INTEGER			NOT NULL
+	,strState		VARCHAR(50)		NOT NULL
+	,CONSTRAINT TStates_PK PRIMARY KEY ( intStateID )
+)
+
+CREATE TABLE TReferees
+(
+	 intRefereeID		INTEGER			NOT NULL
+	,strFirstName		VARCHAR(50)		NOT NULL
+	,strMiddleName	    VARCHAR(50)		NOT NULL
+	,strLastName		VARCHAR(50)		NOT NULL
+	,dtmDateOfBirth	    DATE			NOT NULL
+	,intGenderID	    INTEGER	        NOT NULL
+	,strAddress		    VARCHAR(50)     NOT NULL
+	,strCity			VARCHAR(50)		NOT NULL
+	,intStateID			INTEGER			NOT NULL
+	,strZip				VARCHAR(50)		NOT NULL
+	,strHomePhone	    VARCHAR(50)     NOT NULL
+	,strCellPhone	    VARCHAR(50)     NOT NULL
+	,strEmailAddress	VARCHAR(50)     NOT NULL
+	,CONSTRAINT TReferees_PK PRIMARY KEY ( intRefereeID )
+)
+
+
+CREATE TABLE TAgeGroups
+(
+	 intAgeGroupID	INTEGER			NOT NULL
+	,strAge			VARCHAR(10)		NOT NULL
+	,CONSTRAINT TAgeGroups_PK PRIMARY KEY ( intAgeGroupID )
+)
+
+CREATE TABLE TFields
+(
+	 intFieldID		INTEGER			NOT NULL
+	,strFieldName	VARCHAR(50)		NOT NULL
+	,CONSTRAINT TFields_PK PRIMARY KEY ( intFieldID )
+)
+
+CREATE TABLE TCoaches
+(
+	 intCoachID                        INTEGER			   NOT NULL
+	,strFirstName                      VARCHAR(50)         NOT NULL
+	,strMiddleName                     VARCHAR(50)         NOT NULL
+	,strLastName                       VARCHAR(50)         NOT NULL
+    ,strChildsFirstName                VARCHAR(50)         NOT NULL
+	,strChildsMiddleName               VARCHAR(50)         NOT NULL
+	,strChildsLastName                 VARCHAR(50)         NOT NULL
+    ,dtmDateOfBirth                    Date                NOT NULL
+	,intGenderID	                   INTEGER	           NOT NULL
+	,strAddress	                       VARCHAR(50)         NOT NULL
+	,strCity		                   VARCHAR(50)		   NOT NULL
+	,intStateID	                 	   INTEGER			   NOT NULL
+	,strZip			                   VARCHAR(50)		   NOT NULL
+	,strHomePhone                      VARCHAR(50)		   NOT NULL
+	,strCellPhone	                   VARCHAR(50)		   NOT NULL
+	,strEmailAddress                   VARCHAR(50)		   NOT NULL
+    ,intShirtSizeID                    INTEGER			   NOT NULL
+	,CONSTRAINT TCoaches_PK PRIMARY KEY ( intCoachID )
+)
+
+
+CREATE TABLE TTeamCoaches
+(
+	intTeamCoachID	INTEGER			NOT NULL
+	,intTeamID		INTEGER			NOT NULL
+	,intCoachID		INTEGER			NOT NULL
+	,CONSTRAINT TTeamCoaches_PK PRIMARY KEY ( intTeamCoachID )
+)
+
+
+--CREATE TABLE TPlayers
+--(
+--	intPlayerID		INTEGER			NOT NULL
+--	,strFirstName	VARCHAR(50)		NOT NULL
+--	,strMiddleName	varchar(50)		not null
+--	,strLastName	VARCHAR(50)		NOT NULL
+--	,strEmail		VARCHAR(50)		NOT NULL
+--	,intShirtSizeID	INTEGER			NOT NULL
+--	,intPantSizeID	INTEGER			NOT NULL
+--	,intSockSizeID	INTEGER			NOT NULL
+--	,strCity		VARCHAR(50)		NOT NULL
+--	,intStateID		INTEGER			NOT NULL
+--	,intGenderID	INTEGER			NOT NULL
+--	,intAgeGroupID	INTEGER			NOT NULL
+--	,strAddress		varchar(50)		not null
+--	,strZip			varchar(50)		not null
+--	,CONSTRAINT TPlayers_PK PRIMARY KEY ( intPlayerID )
+--)
+
+CREATE TABLE TPlayers
+(
+	 intPlayerID                       INTEGER			NOT NULL
+	,intAgeGroupID                     INTEGER          NOT NULL
+	,strFirstName                      VARCHAR(50)		NOT NULL
+	,strMiddleName                     VARCHAR(50)		NOT NULL
+	,strLastName                       VARCHAR(50)		NOT NULL
+    ,dtmDateOfBirth                    Date				NOT NULL
+	,intGenderID	                   INTEGER			NOT NULL
+	,strAddress	                       VARCHAR(50)		NOT NULL
+	,strCity		                   VARCHAR(50)		NOT NULL
+	,intStateID	                 	   INTEGER			NOT NULL	
+	,strZip			                   VARCHAR(50)		NOT NULL
+	,strHomePhone                      VARCHAR(50)		NOT NULL
+	,strCellPhone	                   VARCHAR(50)		NOT NULL
+	,strEmailAddress                   VARCHAR(50)		NOT NULL
+    ,intShirtSizeID                    INTEGER			NOT NULL
+	,intPantSizeID	                   INTEGER			NOT NULL	
+	,intSockSizeID	                   INTEGER			NOT NULL
+	,CONSTRAINT TPlayers_PK PRIMARY KEY ( intPlayerID )
+)
+
+CREATE TABLE TTeamPlayers
+(
+	 intTeamPlayerID				   INTEGER			NOT NULL
+	,intTeamID						   INTEGER			NOT NULL
+	,intPlayerID					   INTEGER			NOT NULL
+	,CONSTRAINT TTeamPlayers_PK PRIMARY KEY ( intTeamPlayerID )
+)
+
+CREATE TABLE Z_TeamPlayers
+(
+	intTeamPlayerAuditID	INTEGER		IDENTITY	NOT NULL
+	,intTeamPlayerID		INTEGER			NOT NULL
+	,intTeamID				INTEGER			NOT NULL
+	,intPlayerID			INTEGER			NOT NULL
+	,UpdatedBy				VARCHAR(128)		NOT NULL
+    ,UpdatedOn				DATETIME			NOT NULL
+	,strAction				VARCHAR(1)			NOT NULL
+	,strModified_Reason		VARCHAR(1000)
+	,CONSTRAINT Z_TeamPlayers_PK PRIMARY KEY ( intTeamPlayerAuditID )
+)
+
+CREATE TABLE Z_TeamCoaches
+(
+	intTeamCoachAuditID	INTEGER	IDENTITY	NOT NULL
+	,intTeamCoachID	INTEGER			NOT NULL
+	,intTeamID		INTEGER			NOT NULL
+	,intCoachID		INTEGER			NOT NULL
+	,CONSTRAINT Z_TeamCoaches_PK PRIMARY KEY ( intTeamCoachAuditID )
+)
+
+CREATE TABLE Z_Teams
+(
+	intTeamAuditID	INTEGER	IDENTITY		NOT NULL
+	,intTeamID		INTEGER			NOT NULL
+	,strTeam		VARCHAR(50)		NOT NULL
+	,UpdatedBy		VARCHAR(128)		NOT NULL
+    ,UpdatedOn		DATETIME			NOT NULL
+	,strAction				VARCHAR(1)			NOT NULL
+	,strModified_Reason		VARCHAR(1000)
+	,CONSTRAINT Z_Teams_PK PRIMARY KEY ( intTeamAuditID )
+)
+
+--CREATE TABLE Z_Players
+--(
+--	intPlayerAuditID	INTEGER	IDENTITY	NOT NULL
+--	,intPlayerID		INTEGER			NOT NULL
+--	,strFirstName	VARCHAR(50)		NOT NULL
+--	,strLastName	VARCHAR(50)		NOT NULL
+--	,strEmail		VARCHAR(50)		NOT NULL
+--	,intShirtSizeID	INTEGER			NOT NULL
+--	,intPantSizeID	INTEGER			NOT NULL
+--	,intSockSizeID	INTEGER			NOT NULL
+--	,strCity		VARCHAR(50)		NOT NULL
+--	,intStateID		INTEGER			NOT NULL
+--	,intGenderID	INTEGER			NOT NULL
+--	,intAgeGroupID	INTEGER			NOT NULL
+--	,UpdatedBy		VARCHAR(128)		NOT NULL
+--    ,UpdatedOn		DATETIME			NOT NULL
+--	,strAction				VARCHAR(1)			NOT NULL
+--	,strModified_Reason		VARCHAR(1000)
+--	,CONSTRAINT Z_Players_PK PRIMARY KEY ( intPlayerAuditID )
+--)
+
+CREATE TABLE Z_Players
+(
+	 intPlayerAuditID                  INTEGER	IDENTITY	NOT NULL
+	,intPlayerID                       INTEGER				NOT NULL
+	,intAgeGroupID                     INTEGER              NOT NULL
+	,strFirstName                      VARCHAR(50)			NOT NULL
+	,strMiddleName                     VARCHAR(50)			NOT NULL
+	,strLastName                       VARCHAR(50)			NOT NULL
+    ,dtmDateOfBirth                    Date					NOT NULL
+	,intGenderID	                   INTEGER				NOT NULL
+	,strAddress	                       VARCHAR(50)			NOT NULL
+	,strCity		                   VARCHAR(50)			NOT NULL
+	,intStateID	                 	   INTEGER				NOT NULL	
+	,strZip			                   VARCHAR(50)			NOT NULL
+	,strHomePhone                      VARCHAR(50)			NOT NULL
+	,strCellPhone	                   VARCHAR(50)			NOT NULL
+	,strEmailAddress                   VARCHAR(50)			NOT NULL
+    ,intShirtSizeID                    INTEGER				NOT NULL
+	,intPantSizeID	                   INTEGER				NOT NULL	
+	,intSockSizeID	                   INTEGER				NOT NULL
+    ,UpdatedBy		                   VARCHAR(128)			NOT NULL
+    ,UpdatedOn		                   DATETIME				NOT NULL
+	,strAction		            	   VARCHAR(1)			NOT NULL
+	,strModified_Reason		           VARCHAR(1000)	    NOT NULL
+	,CONSTRAINT Z_Players_PK PRIMARY KEY ( intPlayerAuditID )
+)
+
+CREATE TABLE Z_Coaches
+(
+	 intAuditCoachID		           INTEGER	IDENTITY   NOT NULL
+	,strFirstName                      VARCHAR(50)         NOT NULL
+	,strMiddleName                     VARCHAR(50)         NOT NULL
+	,strLastName                       VARCHAR(50)         NOT NULL
+    ,strChildsFirstName                VARCHAR(50)         NOT NULL
+	,strChildsMiddleName               VARCHAR(50)         NOT NULL
+	,strChildsLastName                 VARCHAR(50)         NOT NULL
+    ,dtmDateOfBirth                    Date                NOT NULL
+	,intGenderID	                   INTEGER	           NOT NULL
+	,strAddress	                       VARCHAR(50)         NOT NULL
+	,strCity		                   VARCHAR(50)		   NOT NULL
+	,intStateID	                 	   INTEGER			   NOT NULL
+	,strZip			                   VARCHAR(50)		   NOT NULL
+	,strHomePhone                      VARCHAR(50)		   NOT NULL
+	,strCellPhone	                   VARCHAR(50)		   NOT NULL
+	,strEmailAddress                   VARCHAR(50)		   NOT NULL
+    ,intShirtSizeID                    INTEGER			   NOT NULL
+	,UpdatedBy		                   VARCHAR(128)	       NOT NULL
+    ,UpdatedOn		                   DATETIME			   NOT NULL
+	,strAction		            	   VARCHAR(1)		   NOT NULL
+	,strModified_Reason		           VARCHAR(1000)
+	,CONSTRAINT Z_Coaches_PK PRIMARY KEY ( intAuditCoachID )
+)
+
+CREATE TABLE TUsers
+(
+	intUserID		integer			not null
+	,intLoginID		integer			not null
+	,intRoleID		integer			not null
+	,CONSTRAINT TUsers_PK PRIMARY KEY ( intUserID )
+)
+
+CREATE TABLE TRoles
+(
+	intRoleID		integer			not null
+	,strRole			VARCHAR(50)		NOT NULL
+	,CONSTRAINT TRoles_PK PRIMARY KEY ( intRoleID )
+)
+
+CREATE TABLE TLogins 
+(
+	 intLoginID		integer			not null
+	,strLoginName	varchar(50)		not null
+	,strPassword	VARCHAR(50)		NOT NULL
+	,CONSTRAINT TLogins_PK PRIMARY KEY ( intLoginID )
+)
+
+CREATE TABLE TFieldGames
+(
+	 intFieldGameID			INTEGER			NOT NULL
+	,intFieldID				INTEGER			NOT NULL
+	--,intTeamID				INTEGER			NOT NULL
+	--,intFieldAdvantageID	INTEGER	        NOT NULL
+	,intTeamID_Home         INTEGER         NOT NULL
+	,intTeamID_Away         INTEGER         NOT NULL
+    ,dtmGameDate			DATE			NOT NULL
+	,strGameTime			VARCHAR(50)     NULL
+	,intRefereeID			INTEGER			NOT NULL
+	,CONSTRAINT TFieldGames_PK PRIMARY KEY ( intFieldGameID )
+	--,CONSTRAINT TFieldGames_UQ UNIQUE ( intTeamID )
+)
+
+create table TSponsors
+(
+	 intSponsorID			INTEGER			NOT NULL
+	,strName				VARCHAR(100)    NOT NULL
+	,monPledgeAmount		DECIMAL(6,2)    NOT NULL
+	,Constraint TSponsors_PK PRIMARY KEY ( intSponsorID )
+)
+create table TLeagues
+(
+	intLeagueID				integer			not null
+	,intUserID				integer			 null
+	,strLeague				varchar(50)		not null
+	,Constraint TLeagues_PK PRIMARY KEY ( intLeagueID )
+)
+---------------------
+-- Create Views
+---------------------
+go
+
+CREATE VIEW vReferee
+AS
+SELECT TReferees.intRefereeID, TReferees.strFirstName, TReferees.strLastName, TFieldGames.intFieldGameID, TFields.strFieldName, TFieldGames.dtmGameDate, TFieldGames.strGameTime 
+FROM TReferees INNER JOIN TFieldGames ON TReferees.intRefereeID = TFieldGames.intRefereeID INNER JOIN TFields ON TFieldGames.intFieldID = TFields.intFieldID
+GO
+
+GO
+CREATE VIEW vTeamWithoutCoach
+AS 
+SELECT strTeam, strAge
+FROM TTeams INNER JOIN TAgeGroups ON TTeams.intAgeGroupID = TAgeGroups.intAgeGroupID
+WHERE intTeamID NOT IN (SELECT intTeamID FROM TTeamCoaches)  
+GO
+
+GO
+CREATE VIEW vSchedule
+AS
+SELECT TTeams.intTeamID, TTeams.strTeam, TFields.strFieldName, TFieldGames.dtmGameDate, TFieldGames.strGameTime
+FROM     TFieldGames INNER JOIN
+                  TFields ON TFieldGames.intFieldID = TFields.intFieldID CROSS JOIN
+                  TTeams
+WHERE TTeams.intTeamID = TFields.intFieldID
+GO
+
+SELECT * FROM [vAllGames]
+
+GO
+CREATE VIEW vAssignedCoaches
+AS
+SELECT * 
+	FROM TCoaches, TTeamCoaches
+WHERE TCoaches.intCoachID = TTeamCoaches.intCoachID 
+GO
+
+Select * from vAssignedCoaches
+
+select * from TTeamCoaches 
+
+
+SELECT        TTeamCoaches.intTeamCoachID, TTeams.strTeam, TCoaches.strFirstName, TCoaches.strLastName
+FROM            TTeamCoaches INNER JOIN
+                         TTeams ON TTeamCoaches.intTeamID = TTeams.intTeamID INNER JOIN
+                         TCoaches ON TTeamCoaches.intCoachID = TCoaches.intCoachID
+						 where TTeamCoaches.intTeamCoachID is not null
+
+						 SELECT        TTeamCoaches.intTeamCoachID, TTeams.strTeam, TCoaches.strFirstName, TCoaches.strLastName
+FROM            TTeamCoaches INNER JOIN
+                         TTeams ON TTeamCoaches.intTeamID = TTeams.intTeamID INNER JOIN
+                         TCoaches ON TTeamCoaches.intCoachID = TCoaches.intCoachID
+						 
+
+GO
+CREATE VIEW v5TeamsWithCoaches
+AS
+						 SELECT        TTeamCoaches.intTeamCoachID, TTeamCoaches.intTeamID, TTeamCoaches.intCoachID, TTeams.strTeam, TCoaches.strFirstName, TCoaches.strLastName, TAgeGroups.intAgeGroupID
+FROM            TTeamCoaches INNER JOIN
+                         TTeams ON TTeamCoaches.intTeamID = TTeams.intTeamID INNER JOIN
+                         TCoaches ON TTeamCoaches.intCoachID = TCoaches.intCoachID INNER JOIN
+                         TAgeGroups ON TTeams.intAgeGroupID = TAgeGroups.intAgeGroupID
+						 where TTeamCoaches.intTeamCoachID is not null AND TTeams.intAgeGroupID = 2
+						 GO
+select * from TFieldGames
+
+SELECT        TFieldGames.intFieldGameID, TFields.strFieldName, TFieldGames.intFieldID, TFieldGames.intTeamID_Home, TFieldGames.intTeamID_Away, TFieldGames.dtmGameDate, TFieldGames.strGameTime, TReferees.strFirstName, 
+                         TReferees.strLastName
+FROM            TFieldGames INNER JOIN
+                         TFields ON TFieldGames.intFieldID = TFields.intFieldID INNER JOIN
+                         TReferees ON TFieldGames.intRefereeID = TReferees.intRefereeID
+
+
+SELECT        TTeams.strTeam, TAgeGroups.strAge
+FROM            TTeams INNER JOIN
+                         TAgeGroups ON TTeams.intAgeGroupID = TAgeGroups.intAgeGroupID
+go
+CREATE VIEW vTeamsWithoutPlayers
+AS 
+SELECT strTeam, strAge
+FROM TTeams INNER JOIN TAgeGroups ON TTeams.intAgeGroupID = TAgeGroups.intAgeGroupID
+WHERE intTeamID NOT IN (SELECT intTeamID FROM TTeamPlayers)  
+GO
+
+go
+CREATE VIEW vPlayersWithoutTeams
+AS 
+SELECT intPlayerID, strFirstName + strLastName as Player, strAge
+FROM TPlayers INNER JOIN TAgeGroups ON TPlayers.intAgeGroupID = TAgeGroups.intAgeGroupID
+WHERE intPlayerID NOT IN (SELECT intPlayerID FROM TTeamPlayers)  
+GO
